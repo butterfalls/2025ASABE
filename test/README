@@ -1,0 +1,23 @@
+
+This directory is intended for PlatformIO Test Runner and project tests.
+
+Unit Testing is a software testing method by which individual units of
+source code, sets of one or more MCU program modules together with associated
+control data, usage procedures, and operating procedures, are tested to
+determine whether they are fit for use. Unit testing finds problems early
+in the development cycle.
+
+More information about PlatformIO Unit Testing:
+- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+
+1.文件架构
+lib文件夹下面是arduino UNO官方提供的伺服电机库，需要#include在src主程序里面；
+include里面是手动编写的.hpp头文件，egg-selection.hpp是对于鸡蛋抓取分拣和复位的程序的函数编写；
+follow-line.hpp属于巡线程序关于灰度值的一些声明，但是实际里面没有放一些函数，主要还是依靠主函数；
+然后motor-control就是对于伺服电机进行控制然后对于麦轮底盘的运动函数定义。
+src是整个工程的主程序，说人话这个程序就是发挥作用的唯一程序，然后其他的都是提供函数和参考的作用；
+
+2.关于各个元器件的使用:包括伺服电机那三个什么使能之类的发挥的是什么作用自己去翻培训赛PPT；
+然后舵机可能培训赛没有涉及但是我们需要涉及到的只有三行代码理解清楚就行了，我在主程序里面都会解释清楚的。所以是一件非常简单的事情；
+所以整个程序单从编程角度可以说没有任何技术含量主要是其中的参数的问题。
+在就是通信的问题，这个稍微复杂一些不过我做视觉调试的时候应该会再调试，所以还是先理解除了视觉之外的整个整体程序把。
