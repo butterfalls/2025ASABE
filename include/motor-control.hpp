@@ -47,7 +47,15 @@ void pulse_send(int times){
 //这个函数是写的最主要的函数，那个电机转什么方向转多久一个函数都解决了，后面整车向哪里运行都是基于这个函数的。
 //说了那么多，那么这个函数有用吗？其实一点作用都没有，你可以发现后面的函数全部是初始化使能，然后涉及到这个函数的代码全部被注释掉了，因为这样子同步性会有一定程度的问题，
 
+void start(){
+  digitalWrite(ENlf ,HIGH);
+  digitalWrite(ENlb ,HIGH);
+  digitalWrite(ENrf ,HIGH);
+  digitalWrite(ENrb ,HIGH);
+}
+
 void forward(int times){
+  start();
   digitalWrite(directionPinlf ,HIGH);
   digitalWrite(directionPinrf ,LOW);
   digitalWrite(directionPinlb ,HIGH);
@@ -57,6 +65,7 @@ void forward(int times){
 
 
 void backward(int times){
+  start();
   digitalWrite(directionPinlf ,LOW);
   digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,LOW);
@@ -72,6 +81,7 @@ void brake(){
 }
 
 void leftward(int times){
+  start();
   digitalWrite(directionPinlf ,LOW);
   digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,HIGH);
@@ -80,6 +90,7 @@ void leftward(int times){
 }
 
 void rightward(int times){
+  start();
   digitalWrite(directionPinlf ,HIGH);
   digitalWrite(directionPinrf ,HIGH);
   digitalWrite(ENlb ,LOW);
@@ -88,6 +99,7 @@ void rightward(int times){
 }
 
 void revolve_cw(int times){
+  start();
   digitalWrite(directionPinlf ,HIGH);
   digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,HIGH);
@@ -96,16 +108,10 @@ void revolve_cw(int times){
 }
 
 void revolve_ccw(int times){
+  start();
   digitalWrite(directionPinlf ,LOW);
   digitalWrite(directionPinrf ,LOW);
   digitalWrite(directionPinlb ,LOW);
   digitalWrite(directionPinrb ,LOW);
   pulse_send(times);
-}
-
-void start(){
-  digitalWrite(ENlf ,HIGH);
-  digitalWrite(ENlb ,HIGH);
-  digitalWrite(ENrf ,HIGH);
-  digitalWrite(ENrb ,HIGH);
 }

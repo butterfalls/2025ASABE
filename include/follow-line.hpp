@@ -23,4 +23,76 @@ int TrackSensorValueD5;
 int TrackSensorValueD6;
 int TrackSensorValueD7;
 int TrackSensorValueD8;
+//白色出1，黑色出0
+void track_zhixian1()
+{
+	if((D4 == 0)&&(D5 == 0))    
+	{
+		forward(40);
+	}
+	else if((D4 == 0)&&(D5 != 0))   
+	{
+		leftward(40);
+	}
+	else if((D4 != 0)&&(D5 == 0))   
+	{
+		rightward(40);
+	}
+	else if((D3 == 0)&&(D4 == 0))   
+	{
+		rightward(40);
+	}
+	else if((D5 == 0)&&(D6 == 0))   
+	{
+		leftward(40);
+	}
+	else if((D3 == 0)&&(D4 != 0))    
+	{
+		rightward(40);
+	}
+	else if((D5 != 0)&&(D6 == 0))   
+	{
+		leftward(40);
+	}
+	else if((D2 == 0)&&(D3 == 0))   
+	{
+		rightward(40);
+	}
+	else if((D6 == 0)&&(D7 == 0))   
+	{
+		leftward(40);
+	}
+	else if((D2 == 0)&&(D3 != 0))    
+	{
+		rightward(40);
+	}
+	else if((D6 != 0)&&(D7 == 0))  
+	{
+		leftward(40);
+	}
+	else if((D1 == 0)&&(D2 == 0))   
+	{
+		rightward(40);
+	}
+	else if((D7 == 0)&&(D8 == 0))   
+	{
+		leftward(40);
+	}
+	else if((D1 == 0)&&(D2 != 0))    
+	{
+		rightward(40);
+	}	
+	else if((D7 !=0)&&(D8 == 0))   
+	{
+		leftward(40);
+	}
+	else   
+	{
+		forward(40);
+	}
+}
 
+int track_detect()
+{
+    if(D3==0&&D4==0&&D5==0&&D6==0) return 1;
+}

@@ -1,3 +1,11 @@
+/*
+ * @Author: butterfalls 1731860884@qq.com
+ * @Date: 2024-10-09 17:48:24
+ * @LastEditors: butterfalls 1731860884@qq.com
+ * @LastEditTime: 2024-10-09 23:18:25
+ * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\egg-selection.hpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include <Arduino.h>
 #include <stdio.h>
 #include <SoftwareSerial.h>
