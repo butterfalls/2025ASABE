@@ -1,3 +1,11 @@
+/*
+ * @Author: butterfalls 1731860884@qq.com
+ * @Date: 2024-10-09 17:48:24
+ * @LastEditors: butterfalls 1731860884@qq.com
+ * @LastEditTime: 2024-10-09 22:36:13
+ * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\motor-control.hpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include <Arduino.h>
 #include <stdio.h>
 #include <SoftwareSerial.h>
@@ -38,55 +46,21 @@ void pulse_send(int times){
 //dir是转动方向。
 //这个函数是写的最主要的函数，那个电机转什么方向转多久一个函数都解决了，后面整车向哪里运行都是基于这个函数的。
 //说了那么多，那么这个函数有用吗？其实一点作用都没有，你可以发现后面的函数全部是初始化使能，然后涉及到这个函数的代码全部被注释掉了，因为这样子同步性会有一定程度的问题，
-void runmotor(int which,int dir,int times){
-if (which ==1){
-    digitalWrite(ENlf ,HIGH);//高电平
-    digitalWrite(directionPinlf ,dir);
-    pulse_send(times);
-}
-      
-else if (which==2){
-    digitalWrite(ENrf ,HIGH);//高电平
-    digitalWrite(directionPinrf ,dir);
-    pulse_send(times);
-}
-
-
-else if(which==3){
-    digitalWrite(ENlb ,HIGH);//高电平
-    digitalWrite(directionPinlb ,dir);
-    pulse_send(times);
-}   
-
-else if (which==4){
-    digitalWrite(ENrb ,HIGH);//高电平
-    digitalWrite(directionPinrb ,dir);
-    pulse_send(times);
-}
-}
 
 void forward(int times){
-  //runmotor(1,HIGH,times);
- // runmotor(2,HIGH,times);
-  //runmotor(3,HIGH,times);
-  //runmotor(4,HIGH,times);
-  digitalWrite(directionPinlf ,LOW);
-  digitalWrite(directionPinrf ,HIGH);
-  digitalWrite(directionPinlb ,LOW);
-  digitalWrite(directionPinrb ,HIGH);
+  digitalWrite(directionPinlf ,HIGH);
+  digitalWrite(directionPinrf ,LOW);
+  digitalWrite(directionPinlb ,HIGH);
+  digitalWrite(directionPinrb ,LOW);
   pulse_send(times);
   }
 
 
 void backward(int times){
-  //runmotor(1,LOW,times);
-  //runmotor(2,LOW,times);
-  //runmotor(3,LOW,times);
-  //runmotor(4,LOW,times);
   digitalWrite(directionPinlf ,LOW);
-  digitalWrite(directionPinrf ,LOW);
+  digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,LOW);
-  digitalWrite(directionPinrb ,LOW);
+  digitalWrite(directionPinrb ,HIGH);
   pulse_send(times);
 }
 
@@ -98,11 +72,6 @@ void brake(){
 }
 
 void leftward(int times){
- // runmotor(1,LOW,times);
-  //runmotor(2,HIGH,times);
-  //runmotor(3,HIGH,times);
-  //runmotor(4,LOW,times);
-
   digitalWrite(directionPinlf ,LOW);
   digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,HIGH);
@@ -111,66 +80,25 @@ void leftward(int times){
 }
 
 void rightward(int times){
-  //runmotor(1,HIGH,times);
-  //runmotor(2,LOW,times);
-  //runmotor(3,LOW,times);
-  //runmotor(4,HIGH,times);
   digitalWrite(directionPinlf ,HIGH);
-  digitalWrite(directionPinrf ,LOW);
-  digitalWrite(directionPinlb ,LOW);
-  digitalWrite(directionPinrb ,HIGH);
+  digitalWrite(directionPinrf ,HIGH);
+  digitalWrite(ENlb ,LOW);
+  digitalWrite(ENrb ,LOW);
   pulse_send(times);
 }
 
 void revolve_cw(int times){
-  //runmotor(1,HIGH,times);
-  //runmotor(2,LOW,times);
-  //runmotor(3,HIGH,times);
-  //runmotor(4,LOW,times);
   digitalWrite(directionPinlf ,HIGH);
-  digitalWrite(directionPinrf ,LOW);
+  digitalWrite(directionPinrf ,HIGH);
   digitalWrite(directionPinlb ,HIGH);
-  digitalWrite(directionPinrb ,LOW);
+  digitalWrite(directionPinrb ,HIGH);
   pulse_send(times);
 }
 
 void revolve_ccw(int times){
-  //runmotor(1,LOW,times);
-  //runmotor(2,HIGH,times);
-  //runmotor(3,LOW,times);
-  //runmotor(4,HIGH,times);
-
   digitalWrite(directionPinlf ,LOW);
-  digitalWrite(directionPinrf ,HIGH);
+  digitalWrite(directionPinrf ,LOW);
   digitalWrite(directionPinlb ,LOW);
-  digitalWrite(directionPinrb ,HIGH);
+  digitalWrite(directionPinrb ,LOW);
   pulse_send(times);
-}
-//下面的函数还是错误的，不过我们这里应该不会需要用到。
-void leftback(int times){
-  runmotor(1,LOW,times);
-  digitalWrite(ENlb ,LOW);
-  digitalWrite(ENrf ,LOW);
-  runmotor(4,LOW,times);
-}
-
-void rightback(int times){
-  runmotor(1,LOW,times);
-  digitalWrite(ENlb ,LOW);
-  digitalWrite(ENrf ,LOW);
-  runmotor(4,LOW,times);
-}
-
-void leftforward(int times){
-  digitalWrite(ENlf ,LOW);  
-  digitalWrite(ENrb ,LOW);
-  runmotor(2,HIGH,times);
-  runmotor(3,HIGH,times);
-}
-
-void rightforward(int times){
-  runmotor(1,HIGH,times);
-  digitalWrite(ENlb ,LOW);
-  digitalWrite(ENrf ,LOW);
-  runmotor(4,HIGH,times);
 }
