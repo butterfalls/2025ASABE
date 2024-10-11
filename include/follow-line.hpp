@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-11 17:29:15
+ * @LastEditTime: 2024-10-11 20:42:32
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -40,11 +40,11 @@ void track_zhixian1()
 	}
 	else if((D4 == 0)&&(D5 != 0))   
 	{
-		leftward(40);
+		rightward(40);
 	}
 	else if((D4 != 0)&&(D5 == 0))   
 	{
-		rightward(40);
+		leftward(40);
 	}
 	else if((D3 == 0)&&(D4 == 0))   
 	{
@@ -78,22 +78,6 @@ void track_zhixian1()
 	{
 		leftward(40);
 	}
-	else if((D1 == 0)&&(D2 == 0))   
-	{
-		rightward(40);
-	}
-	else if((D7 == 0)&&(D8 == 0))   
-	{
-		leftward(40);
-	}
-	else if((D1 == 0)&&(D2 != 0))    
-	{
-		rightward(40);
-	}	
-	else if((D7 !=0)&&(D8 == 0))   
-	{
-		leftward(40);
-	}
 	else   
 	{
 		forward(40);
@@ -103,4 +87,14 @@ void track_zhixian1()
 int track_detect()
 {
     if(D3==0&&D4==0&&D5==0&&D6==0) return 1;
+}
+
+int corner_right()
+{
+	if(D1==0&&D2==0&&D3==0&&D4==0&&D5==0) return 1;
+}
+
+int corner_left()
+{
+	if(D4==0&&D5==0&&D6==0&&D7==0&&D8==0) return 1;
 }
