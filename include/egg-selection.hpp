@@ -26,7 +26,7 @@ int pos_good=0;
 int pos_bad=0;
 
 void grasp(){
-    for (pos_grasp= 0; pos_grasp<= 130; pos_grasp+= 1) {       //pos+=1等价于pos=pos+1
+    for (pos_grasp= 0; pos_grasp<= 90; pos_grasp+= 1) {       //pos+=1等价于pos=pos+1
     servo_grasp.write(pos_grasp);//看这里的servo_grasp说的是叫这个抓取的爪子的伺服电机进行转动；作用就是英文名，叫他抓东西的
     delay(5);					
 }
@@ -39,7 +39,7 @@ for (pos_grasp= 130; pos_grasp>=0; pos_grasp-= 1) {       //pos+=1等价于pos=p
 }
 //我的构思的话，这个函数是实现调用旁边齿轮两个电机加上抓取的电机加上水平移动实现抓取到放好的整个过程
 void deposit_good(){
-for (pos_leftgear= 0; pos_leftgear<= 130; pos_leftgear+= 1) {       //降低爪的高度
+for (pos_leftgear= 0; pos_leftgear<= 90; pos_leftgear+= 1) {       //降低爪的高度
     servo_leftgear.write(pos_leftgear);
     servo_rightgear.write(pos_rightgear);//这边可能会在同步上出现情况但是先这样写着毕竟两个齿轮应该不会出现这么精密的时间差影响运行的问题
     delay(5);					
