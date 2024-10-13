@@ -6,10 +6,22 @@
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+#ifndef _STD_
+#define _STD_
+
 #include <Arduino.h>
 #include <stdio.h>
 #include <SoftwareSerial.h>
+
+#endif
+
+
+#ifndef _FOLLOW_LINE_
+#define _FOLLOW_LINE_
+
 #include <motor-control.hpp>
+
+#endif
 //README里面也说过了，这个灰度的传感器的值和使用厂家提供的资料已经有了，主要是在这里进行一些集体申明，然后主要功能还是依赖主程序。
 //循迹灰度引脚定义
 //D1      D2      D3      D4      D5      D6      D7     D8

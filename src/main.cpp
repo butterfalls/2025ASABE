@@ -1,10 +1,25 @@
+#ifndef _STD_
+#define _STD_
+
 #include <Arduino.h>
+#include <stdio.h>
+#include <SoftwareSerial.h>
+
+#endif
 #include <egg-selection.hpp>
 #include <follow-line.hpp>
+#ifndef _FOLLOW_LINE_
+#define _FOLLOW_LINE_
+
 #include <motor-control.hpp>
-#include <stdio.h>
+
+#endif
+
+#ifndef _EGG_SELECTION_
+#define _EGG_SELECTION_
 #include <Servo.h>
-#include <SoftwareSerial.h>
+#endif
+
 // put function declarations here:
 // put function definitions here:
 
