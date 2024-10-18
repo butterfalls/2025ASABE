@@ -4,12 +4,12 @@ from pyb import Pin, LED, UART
 # 初始化传感器
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)  # 设置为 RGB 彩色格式
-sensor.set_framesize(sensor.QQVGA)    # 设置分辨率为 QQVGA (160x120)
+sensor.set_framesize(sensor.QVGA)    # 设置分辨率为 QQVGA (160x120)
 sensor.skip_frames(time=2000)         # 等待 2 秒让设置生效
 
 # 定义颜色阈值（可以根据需要调整）
-red_threshold = (24, 80, 30, 117, -12, 80)
-green_threshold = (27, 87, -48, -20, -11, 44)
+white_threshold = (70, 100, -10, 5, -10, 0)   # 原 red_threshold -> white_threshold
+brown_threshold = (9, 37, 2, 21, -2, 17)    # 原 green_threshold -> brown_threshold
 
 # 定义最小像素阈值，过滤掉太小的干扰
 MIN_PIXELS = 100  # 根据实际需求调整
@@ -56,7 +56,7 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
     img.draw_rectangle(largest_blob.rect())
 
     # 发送颜色标识符
-    uart.write(f"{'1' if color == 'red' else '2'}\n".encode())
+    uart.write(f"{'1' if color == 'white' else '2'}\n".encode())
 
     # 控制 LED
     led_off.off()
@@ -75,7 +75,7 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
     # 检查当前 blob 是否与平均值的偏差在允许范围内
     if count[color] != 0:
         average = sum_pixels[color] / count[color]
-        if abs(average - largest_blob.pixels()) / average <= 0.4:
+        if abs(average - largest_blob.pixels()) / average <= 0.2:
             sum_pixels[color] += largest_blob.pixels()
             count[color] += 1
         else:
@@ -90,33 +90,33 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
     return count, sum_pixels
 
 # 初始化计数器和累加器
-count = {'red': 0, 'green': 0}
-sum_pixels = {'red': 0, 'green': 0}
+count = {'white': 0, 'brown': 0}
+sum_pixels = {'white': 0, 'brown': 0}
 
 while True:
     clock = time.clock()
     img = sensor.snapshot().lens_corr(strength=1.7, zoom=1)  # 捕获一帧并进行畸变校正
 
     # 查找颜色 blobs
-    blobs_red = img.find_blobs([red_threshold], pixels_threshold=MIN_PIXELS, area_threshold=MIN_PIXELS)
-    blobs_green = img.find_blobs([green_threshold], merge=True, pixels_threshold=MIN_PIXELS, area_threshold=MIN_PIXELS)
+    blobs_white = img.find_blobs([white_threshold], pixels_threshold=MIN_PIXELS, area_threshold=MIN_PIXELS)
+    blobs_brown = img.find_blobs([brown_threshold], merge=True, pixels_threshold=MIN_PIXELS, area_threshold=MIN_PIXELS)
 
-    # 处理红色物体
+    # 处理白色物体
     count, sum_pixels = process_blobs(
-        blobs_red,
-        'red',
-        LED(1),  # 红色 LED，假设 LED(1) 代表红色
-        LED(2),  # 其他 LED
+        blobs_white,
+        'white',
+        LED(1),  # 红色 LED，保持不变
+        LED(2),  # 其他 LED，保持不变
         count,
         sum_pixels
     )
 
-    # 处理绿色物体
+    # 处理棕色物体
     count, sum_pixels = process_blobs(
-        blobs_green,
-        'green',
-        LED(2),  # 绿色 LED，假设 LED(2) 代表绿色
-        LED(1),  # 其他 LED
+        blobs_brown,
+        'brown',
+        LED(2),  # 绿色 LED，保持不变
+        LED(1),  # 其他 LED，保持不变
         count,
         sum_pixels
     )
