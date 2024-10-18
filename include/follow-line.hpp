@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-11 20:42:32
+ * @LastEditTime: 2024-10-18 17:03:49
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,14 +25,14 @@
 //README里面也说过了，这个灰度的传感器的值和使用厂家提供的资料已经有了，主要是在这里进行一些集体申明，然后主要功能还是依赖主程序。
 //循迹灰度引脚定义
 //D1      D2      D3      D4      D5      D6      D7     D8
-const int D1  =  1;  
-const int D2  =  2;  
-const int D3 =   3;  
-const int D4 =   4;  
-const int D5  =  5;  
-const int D6  =  6;  
-const int D7 =   7;  
-const int D8 =   8;  
+const int D1 =   32; 
+const int D2 =   48; 
+const int D3 =   47; 
+const int D4 =   33; 
+const int D5 =   34; 
+const int D6 =   36; 
+const int D7 =   35;  
+const int D8 =   37; 
 
 //定义各个循迹灰度引脚采集的数据的变量
 int TrackSensorValueD1;

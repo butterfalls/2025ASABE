@@ -15,18 +15,18 @@
 
 #endif
 //这些都是电机的引脚的申明，方向/脉冲/使能，就不多说了
-#define directionPinlf 40  //定义11引脚接DIR，控制电机正反转
-#define directionPinlb 2
-#define directionPinrf 10
-#define directionPinrb 9
-#define stepPinlf 44   //定义12引脚接驱动器脉冲信号PUL
-#define stepPinlb 4
-#define stepPinrf 12
-#define stepPinrb 11
-#define ENlf 42
-#define ENlb 6
-#define ENrf 14
-#define ENrb 13
+#define directionPinlf 48  //定义11引脚接DIR，控制电机正反转
+#define directionPinlb 40
+#define directionPinrf 50
+#define directionPinrb 41
+#define stepPinlf 46   //定义12引脚接驱动器脉冲信号PUL
+#define stepPinlb 44
+#define stepPinrf 52
+#define stepPinrb 45
+#define ENlf 47
+#define ENlb 42
+#define ENrf 51
+#define ENrb 43
 #define DELAY_US 1000  //定义延时时间 _微秒，也就是半个脉冲的周期时间
 #define stepsPerRevolution 56000   //脉冲数量
 //发脉冲的，因为四个电机要同步转所以这么写

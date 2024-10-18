@@ -127,3 +127,4 @@ for (pos_bad=0; pos_bad<=130; pos_bad+= 1) {       //好蛋下料
     delay(5);					
 }
 }
+

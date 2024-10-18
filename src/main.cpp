@@ -30,12 +30,12 @@ void setup() {
   // put your setup code here, to run once:
   //几个步进电机的对象的初始化
   myservo.attach(29, 500, 2500);//修正脉冲宽度，这个是伺服电机需要理解的代码之一，步进电机对象就是前面蓝色的部分，然后第一个值是引脚，后面是脉冲宽度的最小值和最大值就不多说了。
-  servo_upgear.attach(30, 500, 2500);
-  servo_leftgear.attach(31, 500, 2500);
-  servo_rightgear.attach(32, 500, 2500);
-  servo_grasp.attach(33, 500, 2500);
-  servo_good.attach(34, 500, 2500);
-  servo_bad.attach(35, 500, 2500);
+  servo_upgear.attach(27, 500, 2500);
+  servo_leftgear.attach(2, 500, 2500);
+  servo_rightgear.attach(9, 500, 2500);
+  servo_grasp.attach(21, 500, 2500);
+  servo_good.attach(3, 500, 2500);
+  servo_bad.attach(8, 500, 2500);
   //初始化OUTPUT和INPUT，这些就不多余说了，
   pinMode(directionPinlf ,OUTPUT);//DIR输出信号
   pinMode(directionPinlb ,OUTPUT);
@@ -107,15 +107,15 @@ void loop() {
    String data = Serial3.readStringUntil('\n');
    data.trim();//不会自动转化成字符串，不会自动添加其他字符
 //读到1还是2 说的是视觉识别返回值是好蛋还是坏蛋
-    if (data=="1"||data=="2"){
-      if (data=="1") {
+    if (data.substring(0, 5)=="white"||data.substring(0, 5)=="green"){
+      if (data.substring(0, 5)=="white") {
       Serial.println("Good detected!");//自动转化成字符串并添加换行符和回车符
       deposit_good();
       rightward(0);//如果需要左移定位,右移复位
       reset_good();
       number+=1;
       }
-      else if (data=="2"){
+      else if (data.substring(0, 5)=="brown"){
       Serial.println("Bad detected!");
       deposit_bad();
       rightward(0);//如果需要左移定位,右移复位
