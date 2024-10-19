@@ -61,6 +61,7 @@ int corner_left()
 	if(D4==0&&D5==0&&D6==0&&D7==0&&D8==0) return 1;
 }
 
+
 //十字路口处抓取，计数抓取到第四个蛋时，掉头返回，不负责移动
 void column_grab()
 {
@@ -119,7 +120,7 @@ void column_grab()
     forward(100);
     if(number==4){
         revolve_cw(semicycle);//掉头返回
-        forward(5000);//关键数据，关于一条支路的总长度
+        back_first_track();
     }
   }
 }

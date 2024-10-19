@@ -108,7 +108,8 @@ void loop() {
   if (number==4 && count==1){
 
     revolve_ccw(semicycle/2);
-    forward(depth);//调整两个下料口的距离
+    forward(2000);//走到第一个下料处
+
     discharge_right(1);//1是好蛋，2是坏蛋
     revolve_cw(semicycle);
 
@@ -121,7 +122,7 @@ void loop() {
     revolve_cw(semicycle/2);
   }
   if (number==4 && count==2){
-    
+
   }
 
   else if(number==4 && count==2){
