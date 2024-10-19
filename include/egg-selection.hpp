@@ -33,16 +33,6 @@ Servo servo_grasp;//爪抓取驱动伺服电机
 Servo servo_good;//好蛋出料驱动伺服电机
 Servo servo_bad;//坏蛋出料驱动伺服电机
 
-//几个步进电机的对象的初始化
-myservo.attach(29, 500, 2500);//修正脉冲宽度，这个是伺服电机需要理解的代码之一，步进电机对象就是前面蓝色的部分，然后第一个值是引脚，后面是脉冲宽度的最小值和最大值就不多说了。
-servo_upgear.attach(27, 500, 2500);
-servo_leftgear.attach(2, 500, 2500);
-servo_rightgear.attach(9, 500, 2500);
-servo_grasp.attach(21, 500, 2500);
-servo_good.attach(3, 500, 2500);
-servo_bad.attach(8, 500, 2500);
-
-
 int pos_upgear=0;//这几个写的是伺服电机的位角，说人话就是每次转到多少度角的问题。
 int pos_leftgear=0;
 int pos_rightgear=0;
