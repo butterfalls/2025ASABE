@@ -5,11 +5,6 @@
 #include <SoftwareSerial.h>
 #endif
 
-#ifndef _FOLLOW_LINE_
-#define _FOLLOW_LINE_
-#include <follow-line.hpp>
-#endif
-
 #ifndef _MOTOR_CONTROL_
 #define _MOTOR_CONTROL_
 #include <motor-control.hpp>
@@ -25,10 +20,17 @@
 #include<grab_column.hpp>
 #endif
 
+#ifndef _FOLLOW_LINE_
+#define _FOLLOW_LINE_
+#include <follow-line.hpp>
+#endif
+
 // put function declarations here:
 // put function definitions here:
 
   int count=0;
+
+#define depth 2000
 
 Servo myservo;
 void setup() {
@@ -41,6 +43,14 @@ void setup() {
   servo_grasp.attach(21, 500, 2500);
   servo_good.attach(3, 500, 2500);
   servo_bad.attach(8, 500, 2500);
+
+  //配置舵机初始位置
+  servo_upgear.write(1500);
+  servo_leftgear.write(41);
+  servo_rightgear.write(1500);
+  servo_grasp.write(1500);
+  servo_good.write(41);//面向arduino，左边是good
+  servo_bad.write(139);
   //初始化OUTPUT和INPUT，这些就不多余说了，
   pinMode(directionPinlf ,OUTPUT);//DIR输出信号
   pinMode(directionPinlb ,OUTPUT);
@@ -81,7 +91,6 @@ void setup() {
 }
 
 void loop() {
-  forward(50);
   // put your main code here, to run repeatedly:
   //储存传感器读到的数据
   TrackSensorValueD1=digitalRead(D1);
@@ -94,29 +103,33 @@ void loop() {
   TrackSensorValueD8=digitalRead(D8);
 //检测是黑0白1
   track_zhixian1();
-  column_grab();
-
   //方法一：使用number记录收集次数:次数满之后返回，识别到一个蛋number值+1,4个满了之后掉头返回
   //count说的是现在在第几条循环上。
-  if (number==4 && count<4){
-    revolve_cw(180);//掉头返回
-    while ((D4==0)&&(D5==0)){
-      forward(50);
-    }
-    revolve_ccw(90);
-    forward(20);
-    while ((D6==1)||(D7==1)||(D8==1)){
-    forward(20);
-    }
-    if ((D1==0)||(D2==0)||(D3==0)){
-    revolve_ccw(90);//左侧边沿由白转黑，转90度去下一条支路
-    }
-    forward(20);
+  if (number==4 && count==1){
+
+    revolve_ccw(semicycle/2);
+    forward(depth);//调整两个下料口的距离
+    discharge_right(1);//1是好蛋，2是坏蛋
+    revolve_cw(semicycle);
+
+    forward(200);
+    discharge_right(2);
     number=0;
     count++;
+
+    forward(depth);
+    revolve_cw(semicycle/2);
   }
+  if (number==4 && count==2){
+    
+  }
+
+  else if(number==4 && count==2){
+
+  }
+
 //所有蛋均识别+收集完毕：count指的是第四条支路，启程去下料的位置
-if (count==4){
+  if (count==4){
   /*  if ((D3==1)&&(D4==0)&&(D5==0)&&(D6==1)||(D3==0)&&(D4==0)&&(D5==0)&&(D6==0)){
       backward(50);
     }
@@ -128,17 +141,17 @@ if (count==4){
       leftward(100);
       discharge_bad();
     }*/
-  revolve_cw(180);
+  revolve_cw(semicycle);
     while ((D4==0)&&(D5==0)){
       forward(50);
     }
-    revolve_cw(90);
+    revolve_cw(semicycle/2);
     while (((D1==1)||(D2==1)||(D3==1))&&((D6==1)||(D7==1)||(D8==1)))//白黑白，继续执行，可能有逻辑上的重复后面可能要改先这样放着
     {
       forward(50);
     }
   if (((D1==0)||(D2==0))&&((D7==0)||(D8==0))){//黑黑黑，到收集框的那个位置。
-    revolve_cw(90);
+    revolve_cw(semicycle/2);
   }
   //后退对准
   backward(50);
@@ -148,6 +161,5 @@ if (count==4){
   deposit_bad();
 
 }
-
 }
 
