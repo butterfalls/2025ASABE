@@ -32,7 +32,7 @@ uart = UART(3, 9600)
 
 # 辅助函数：通过 UART 发送检测信息
 def send_detection(color, uart, detection_value, detection_cx):
-    message = f"{color}: {detection_value} - {detection_cx}"
+    message = f"{color}: {detection_value:04d} - {detection_cx:03d}"
     uart.write((message + '\n').encode())
 
 # 封装处理函数，避免代码重复

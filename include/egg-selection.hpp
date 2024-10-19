@@ -1,5 +1,13 @@
 /*
  * @Author: butterfalls 1731860884@qq.com
+ * @Date: 2024-10-11 20:46:58
+ * @LastEditors: butterfalls 1731860884@qq.com
+ * @LastEditTime: 2024-10-19 17:56:48
+ * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\egg-selection.hpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
  * @LastEditTime: 2024-10-09 23:18:25
@@ -9,17 +17,14 @@
 //yhk test
 #ifndef _STD_
 #define _STD_
-
 #include <Arduino.h>
 #include <stdio.h>
 #include <SoftwareSerial.h>
-
 #endif
 
-#ifndef _EGG_SELECTION_
-#define _EGG_SELECTION_
+
 #include <Servo.h>
-#endif
+
 
 Servo servo_upgear;//横杆齿轮驱动伺服电机，在这里是声明的对象，后续函数为这个名字加上.write这样的形式做引用。
 Servo servo_leftgear;//左侧齿轮驱动伺服电机

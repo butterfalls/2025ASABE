@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-18 17:03:49
+ * @LastEditTime: 2024-10-19 17:25:14
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -43,58 +43,11 @@ int TrackSensorValueD5;
 int TrackSensorValueD6;
 int TrackSensorValueD7;
 int TrackSensorValueD8;
-//白色出1，黑色出0
-void track_zhixian1()
-{
-	if((D4 == 0)&&(D5 == 0))    
-	{
-		forward(40);
-	}
-	else if((D4 == 0)&&(D5 != 0))   
-	{
-		rightward(40);
-	}
-	else if((D4 != 0)&&(D5 == 0))   
-	{
-		leftward(40);
-	}
-	else if((D3 == 0)&&(D4 == 0))   
-	{
-		rightward(40);
-	}
-	else if((D5 == 0)&&(D6 == 0))   
-	{
-		leftward(40);
-	}
-	else if((D3 == 0)&&(D4 != 0))    
-	{
-		rightward(40);
-	}
-	else if((D5 != 0)&&(D6 == 0))   
-	{
-		leftward(40);
-	}
-	else if((D2 == 0)&&(D3 == 0))   
-	{
-		rightward(40);
-	}
-	else if((D6 == 0)&&(D7 == 0))   
-	{
-		leftward(40);
-	}
-	else if((D2 == 0)&&(D3 != 0))    
-	{
-		rightward(40);
-	}
-	else if((D6 != 0)&&(D7 == 0))  
-	{
-		leftward(40);
-	}
-	else   
-	{
-		forward(40);
-	}
-}
+
+int corner_right_count=0;
+int corner_left_count = 0;
+int corner_track_count = 0;
+
 
 int track_detect()
 {
@@ -109,4 +62,44 @@ int corner_right()
 int corner_left()
 {
 	if(D4==0&&D5==0&&D6==0&&D7==0&&D8==0) return 1;
+}
+//白色出1，黑色出0
+void track_zhixian1()
+{
+	if((D3==1)&&(D4 == 0)&&(D5 == 0)&&(D6 == 1))    
+	{
+		forward(40);
+	}
+	else if((D4 == 0)&&(D5 != 0))   
+	{
+		rightward(40);
+	}
+	else if((D4 != 0)&&(D5 == 0))   
+	{
+		leftward(40);
+	}
+	else if((D3 == 0)&&(D4 == 0)&&(D2 == 1))   
+	{
+		rightward(40);
+	}
+	else if((D5 == 0)&&(D6 == 0)&&(D7 == 1))   
+	{
+		leftward(40);
+	}
+	else if(track_detect())
+	{
+		corner_track_count++;
+	}
+	else if(corner_right())    
+	{
+		corner_right_count++;
+	}
+	else if(corner_left())   
+	{
+		corner_left_count++;
+	}
+	else   
+	{
+		forward(40);
+	}
 }
