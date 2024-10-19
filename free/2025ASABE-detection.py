@@ -31,12 +31,12 @@ def calculate_distance(perceived_width):
 uart = UART(3, 9600)
 
 # 辅助函数：通过 UART 发送检测信息
-def send_detection(color, uart, detection_value):
-    message = f"{color}: {detection_value} - {pyb.millis()}"
+def send_detection(color, uart, detection_value, detection_cx):
+    message = f"{color}: {detection_value} - {detection_cx}"
     uart.write((message + '\n').encode())
 
 # 封装处理函数，避免代码重复
-def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
+def process_blobs(blobs, color, led_on, led_off, count, sum_pixels, sum_cx):
     """
     处理检测到的 blobs，只返回最大的有效 blob
     """
@@ -68,8 +68,10 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
     # 更新计数与累加
     if count[color] >= 10:
         average = sum_pixels[color] / 10
-        send_detection(color, uart, average)
+        average_cx = sum_cx[color] / 10
+        send_detection(color, uart, average, average_cx)
         sum_pixels[color] = 0
+        sum_cx[color] = 0
         count[color] = 0
 
     # 检查当前 blob 是否与平均值的偏差在允许范围内
@@ -77,14 +79,17 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
         average = sum_pixels[color] / count[color]
         if abs(average - largest_blob.pixels()) / average <= 0.2:
             sum_pixels[color] += largest_blob.pixels()
+            sum_cx[color] += largest_blob.cx()
             count[color] += 1
         else:
             # 如果偏差过大，重置累加器
             sum_pixels[color] = largest_blob.pixels()
+            sum_cx[color] = largest_blob.cx()
             count[color] = 1
     else:
         # 如果计数为0，初始化累加器
         sum_pixels[color] += largest_blob.pixels()
+        sum_cx[color] += largest_blob.cx()
         count[color] += 1
 
     return count, sum_pixels
@@ -92,6 +97,7 @@ def process_blobs(blobs, color, led_on, led_off, count, sum_pixels):
 # 初始化计数器和累加器
 count = {'white': 0, 'brown': 0}
 sum_pixels = {'white': 0, 'brown': 0}
+sum_cx = {'white': 0, 'brown': 0}
 
 while True:
     clock = time.clock()
@@ -108,7 +114,8 @@ while True:
         LED(1),  # 红色 LED，保持不变
         LED(2),  # 其他 LED，保持不变
         count,
-        sum_pixels
+        sum_pixels,
+        sum_cx
     )
 
     # 处理棕色物体
@@ -118,7 +125,8 @@ while True:
         LED(2),  # 绿色 LED，保持不变
         LED(1),  # 其他 LED，保持不变
         count,
-        sum_pixels
+        sum_pixels,
+        sum_cx
     )
 
     # 释放 CPU 资源，防止 CPU 占用过高
