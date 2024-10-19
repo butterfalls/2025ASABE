@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-19 20:53:20
+ * @LastEditTime: 2024-10-19 20:59:49
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -102,6 +102,10 @@ void back_first_track()
 			corner_track_count--;
 			if(corner_track_count==0) {
 				forward(80);
+				while(D8==1&&D1==1)
+				{
+					forward(20);
+				}
 				break;
 			}
 		}
