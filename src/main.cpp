@@ -46,11 +46,12 @@ void setup() {
 
   //配置舵机初始位置
   servo_upgear.write(1500);
-  servo_leftgear.write(41);
+  servo_leftgear.write(1500);
   servo_rightgear.write(1500);
-  servo_grasp.write(1500);
-  servo_good.write(41);//面向arduino，左边是good
-  servo_bad.write(139);
+  servo_grasp.write(81);
+  servo_good.write(140);//面向arduino，左边是good
+  servo_bad.write(48);
+
   //初始化OUTPUT和INPUT，这些就不多余说了，
   pinMode(directionPinlf ,OUTPUT);//DIR输出信号
   pinMode(directionPinlb ,OUTPUT);

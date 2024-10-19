@@ -41,13 +41,13 @@ int pos_good=0;
 int pos_bad=0;
 
 void grasp(){
-    for (pos_grasp= 0; pos_grasp<= 90; pos_grasp+= 1) {       //pos+=1等价于pos=pos+1
+    for (pos_grasp= 81; pos_grasp>=30; pos_grasp-= 1) {       //pos+=1等价于pos=pos+1
     servo_grasp.write(pos_grasp);//看这里的servo_grasp说的是叫这个抓取的爪子的伺服电机进行转动；作用就是英文名，叫他抓东西的
     delay(5);					
 }
 }
 void release(){
-for (pos_grasp= 130; pos_grasp>=0; pos_grasp-= 1) {       //pos+=1等价于pos=pos+1
+for (pos_grasp= 30; pos_grasp<=81; pos_grasp+= 1) {       //pos+=1等价于pos=pos+1
     servo_grasp.write(pos_grasp);//叫抓取的爪子放开来。
     delay(5);					
 }
@@ -120,16 +120,16 @@ for (pos_upgear=0; pos_upgear<=130; pos_upgear+= 1) {       //水平移动到坏
 }
 //这个就是到最后的位置把好蛋和坏蛋倒入收集框的函数
 void discharge_good(){
-for (pos_good=0; pos_good<=130; pos_good+= 1) {       //好蛋下料
+for (pos_good=140; pos_good<=175; pos_good+= 1) {       //好蛋下料
     servo_good.write(pos_good);
-    delay(5);					
+    delay(20);					
 }
 }
 
 void discharge_bad(){
-for (pos_bad=0; pos_bad<=130; pos_bad+= 1) {       //好蛋下料
+for (pos_bad=48; pos_bad>=13; pos_bad-= 1) {       //好蛋下料
     servo_bad.write(pos_bad);
-    delay(5);					
+    delay(20);					
 }
 }
 
