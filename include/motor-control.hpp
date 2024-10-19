@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-13 00:38:26
+ * @LastEditTime: 2024-10-19 16:19:11
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\motor-control.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -68,6 +68,25 @@ void forward(int times){
   pulse_send(times);
   }
 
+void left_translation(int times)
+{
+  start();
+  digitalWrite(directionPinlf ,LOW);
+  digitalWrite(directionPinrf ,LOW);
+  digitalWrite(directionPinlb ,HIGH);
+  digitalWrite(directionPinrb ,HIGH);
+  pulse_send(times);
+}
+
+void right_translation(int times)
+{
+  start();
+  digitalWrite(directionPinlf ,HIGH);
+  digitalWrite(directionPinrf ,HIGH);
+  digitalWrite(directionPinlb ,LOW);
+  digitalWrite(directionPinrb ,LOW);
+  pulse_send(times);
+}
 
 void backward(int times){
   start();

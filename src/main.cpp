@@ -1,30 +1,35 @@
 #ifndef _STD_
 #define _STD_
-
 #include <Arduino.h>
 #include <stdio.h>
 #include <SoftwareSerial.h>
-
 #endif
-#include <egg-selection.hpp>
-#include <follow-line.hpp>
+
 #ifndef _FOLLOW_LINE_
 #define _FOLLOW_LINE_
+#include <follow-line.hpp>
+#endif
 
+#ifndef _MOTOR_CONTROL_
+#define _MOTOR_CONTROL_
 #include <motor-control.hpp>
-
 #endif
 
 #ifndef _EGG_SELECTION_
 #define _EGG_SELECTION_
-#include <Servo.h>
+#include <egg-selection.hpp>
+#endif
+
+#ifndef _GRAB_COLUMN_
+#define _GRAB_COLUMN_
+#include<grab_column.hpp>
 #endif
 
 // put function declarations here:
 // put function definitions here:
 
   int count=0;
-  int number=0;
+
 Servo myservo;
 void setup() {
   // put your setup code here, to run once:
@@ -66,24 +71,17 @@ void setup() {
   digitalWrite(ENrb, HIGH);
   digitalWrite(ENlb, HIGH);
 
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D5, HIGH);
-  digitalWrite(D6, HIGH);
-  digitalWrite(D7, HIGH);
-  digitalWrite(D8, HIGH);
 //这个是通信的部分启动那个串行接口，波特率给的是多少，然后arduino mega上面对应的哪个通信串口都有对应的编号，
   Serial.begin(9600);
   Serial3.begin(9600);
 
-  leftward(50);
-  forward(50);//左移+前进，定位到开始四个循环的初始位置
-
+  forward(100);
+  revolve_ccw(100);
+  forward(300);//达到初始位置
 }
 
 void loop() {
+  forward(50);
   // put your main code here, to run repeatedly:
   //储存传感器读到的数据
   TrackSensorValueD1=digitalRead(D1);
@@ -94,47 +92,13 @@ void loop() {
   TrackSensorValueD6=digitalRead(D6);
   TrackSensorValueD7=digitalRead(D7);
   TrackSensorValueD8=digitalRead(D8);
-//如果没记错的话应该是黑1白0，然后八路循迹是从左到右1，2，3，4，5，6，7，8,3;4;5;6就是中间的四个//这个记错了，要把10全部换掉
-  if((D3==1)&&(D4==0)&&(D5==0)&&(D6==1)){
-    forward(50);//就是黑线在中间，这个车前进，因为这是个loop函数所以直接放if
-  }
-
-  if ((D3==0)&&(D4==0)&&(D5==0)&&(D6==0)){//3,4,5,6=黑黑黑黑，就是到中间岔路口停下来开始识别+抓取的进程
-    leftward(0);//如果需要左移定位
-  //与openMV通信，运行抓取和分类程序
-  
-  if (Serial3.available()) {    
-   String data = Serial3.readStringUntil('\n');
-   data.trim();//不会自动转化成字符串，不会自动添加其他字符
-//读到1还是2 说的是视觉识别返回值是好蛋还是坏蛋
-    if (data.substring(0, 5)=="white"||data.substring(0, 5)=="green"){
-      if (data.substring(0, 5)=="white") {
-      Serial.println("Good detected!");//自动转化成字符串并添加换行符和回车符
-      deposit_good();
-      rightward(0);//如果需要左移定位,右移复位
-      reset_good();
-      number+=1;
-      }
-      else if (data.substring(0, 5)=="brown"){
-      Serial.println("Bad detected!");
-      deposit_bad();
-      rightward(0);//如果需要左移定位,右移复位
-      reset_bad();
-      number+=1;
-      }
-    }
-  }
-  }
+//检测是黑0白1
+  track_zhixian1();
+  column_grab();
 
   //方法一：使用number记录收集次数:次数满之后返回，识别到一个蛋number值+1,4个满了之后掉头返回
   //count说的是现在在第几条循环上。
   if (number==4 && count<4){
-    /*    if ((D3==1)&&(D4==0)&&(D5==0)&&(D6==1)||(D3==0)&&(D4==0)&&(D5==0)&&(D6==0)){
-      backward(50);
-    }
-    else if ((D3==1)&&(D4==0)&&(D5==0)&&(D6==0)||(D3==0)&&(D4==0)&&(D5==0)&&(D6==0)){
-      rightward (100);
-    }*/
     revolve_cw(180);//掉头返回
     while ((D4==0)&&(D5==0)){
       forward(50);
