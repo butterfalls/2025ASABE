@@ -2,7 +2,7 @@
  * @Author: butterfalls 1731860884@qq.com
  * @Date: 2024-10-09 17:48:24
  * @LastEditors: butterfalls 1731860884@qq.com
- * @LastEditTime: 2024-10-19 21:12:52
+ * @LastEditTime: 2024-10-19 22:36:44
  * @FilePath: \hw1e:\Files\code\2025ASABE-selection\include\follow-line.hpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -74,11 +74,15 @@ void track_zhixian1()
 }
 
 
-void discharge_right(int quality)//1是好蛋，2是坏蛋，右侧下料，不负责转回去
-{
-if (corner_left()||corner_right()||track_detect())
-{//第一次下料
-    revolve_ccw(semicycle);
-    if(quality)discharge_good();else discharge_bad();
-}
-}
+// void discharge(int quality,int direction)//1是好蛋，0是坏蛋，右侧下料，不负责转回去;1是右手下蛋，0是左手
+// {
+// if (corner_left()||corner_right()||track_detect())
+// {//第一次下料
+//     if(direction) revolve_ccw(semicycle); else revolve_cw(semicycle);
+//     if(quality)discharge_good();else discharge_bad();
+// }
+// else
+// {
+// 	forward(20);
+// }
+// }
