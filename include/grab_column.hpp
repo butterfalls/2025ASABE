@@ -170,6 +170,7 @@ void column_grab()
     forward(100);
     if(number==4){
         revolve_cw(semicycle);//掉头返回
+        number-=1;
         back_first_track();
     }
   }

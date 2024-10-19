@@ -111,11 +111,13 @@ void loop() {
     revolve_ccw(semicycle/2);
     forward(2000);//走到第一个下料处
 
-    discharge_right(1);//1是好蛋，2是坏蛋
+    revolve_ccw(semicycle);
+    discharge_good();
     revolve_cw(semicycle);
 
     forward(depth);
-    discharge_right(2);
+    revolve_ccw(semicycle);
+    discharge_bad();
     number=0;
     count++;
 
@@ -123,67 +125,78 @@ void loop() {
     revolve_cw(semicycle/2);
   }
   if (number==4 && count==2){
-    revolve_ccw(semicycle/2);
+    revolve_cw(semicycle/2);
 
-    discharge_right(1);//1是好蛋，2是坏蛋
+    discharge_good();
     revolve_cw(semicycle);
 
     forward(depth);
-    discharge_right(2);
+    discharge_bad();
     number=0;
     count++;
 
-    revolve_cw(semicycle/2);
+    revolve_ccw(semicycle/2);
   }
   if (number==4 && count==3){
-    revolve_ccw(semicycle/2);
+    revolve_cw(semicycle/2);
 
-    discharge_right(1);//1是好蛋，2是坏蛋
+    discharge_bad();
 
-    forward(200);
-    discharge_right(2);
+    forward(depth);
+    discharge_good();
     number=0;
     count++;
 
-    revolve_cw(semicycle/2);
+    revolve_cw(semicycle);
+
+    forward(depth);
+    forward(2000);
+
+    revolve_ccw(semicycle);
   }
+  if (number==4 && count==4){
+    revolve_cw(semicycle/2);
+    forward(2000);//走到第一个下料处
 
-  else if(number==4 && count==2){
+    discharge_bad();
+
+    forward(depth);
+    discharge_good();
+    number=0;
+    count++;
+
+    revolve_ccw(semicycle);
+    forward(depth);
+    forward(2000);
+    revolve_ccw(semicycle/2);
+
+    //开始抓取第四线路右侧
+    forward(8000);
+    revolve_ccw(semicycle);
 
   }
-
-//所有蛋均识别+收集完毕：count指的是第四条支路，启程去下料的位置
-  if (count==4){
-  /*  if ((D3==1)&&(D4==0)&&(D5==0)&&(D6==1)||(D3==0)&&(D4==0)&&(D5==0)&&(D6==0)){
-      backward(50);
-    }
-    else if ((D3==0)&&(D4==0)&&(D5==0)&&(D6==1)){
-      leftward (100);
-      backward(50);
-       discharge_good();
-      forward(50);
-      leftward(100);
-      discharge_bad();
-    }*/
-  revolve_cw(semicycle);
-    while ((D4==0)&&(D5==0)){
-      forward(50);
-    }
+  if (number==4 && count==5){
     revolve_cw(semicycle/2);
-    while (((D1==1)||(D2==1)||(D3==1))&&((D6==1)||(D7==1)||(D8==1)))//白黑白，继续执行，可能有逻辑上的重复后面可能要改先这样放着
+    forward(2000);//走到第一个下料处
+
+    discharge_bad();
+
+    forward(depth);
+    discharge_good();
+    number=0;
+    count++;
+
+    forward(2000);
+    forward(200);
+    left_translation(200);
+  }
+  
+  if(count==5)
+  {
+    while(true)
     {
-      forward(50);
+      
     }
-  if (((D1==0)||(D2==0))&&((D7==0)||(D8==0))){//黑黑黑，到收集框的那个位置。
-    revolve_cw(semicycle/2);
   }
-  //后退对准
-  backward(50);
-  deposit_good();
-//左移到另一个框
-  leftward(100);
-  deposit_bad();
-
-}
 }
 
