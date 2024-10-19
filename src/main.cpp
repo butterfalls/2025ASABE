@@ -113,7 +113,7 @@ void loop() {
     discharge_right(1);//1是好蛋，2是坏蛋
     revolve_cw(semicycle);
 
-    forward(200);
+    forward(depth);
     discharge_right(2);
     number=0;
     count++;
@@ -122,7 +122,29 @@ void loop() {
     revolve_cw(semicycle/2);
   }
   if (number==4 && count==2){
+    revolve_ccw(semicycle/2);
 
+    discharge_right(1);//1是好蛋，2是坏蛋
+    revolve_cw(semicycle);
+
+    forward(depth);
+    discharge_right(2);
+    number=0;
+    count++;
+
+    revolve_cw(semicycle/2);
+  }
+  if (number==4 && count==3){
+    revolve_ccw(semicycle/2);
+
+    discharge_right(1);//1是好蛋，2是坏蛋
+
+    forward(200);
+    discharge_right(2);
+    number=0;
+    count++;
+
+    revolve_cw(semicycle/2);
   }
 
   else if(number==4 && count==2){

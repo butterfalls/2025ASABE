@@ -61,6 +61,56 @@ int corner_left()
 	if(D4==0&&D5==0&&D6==0&&D7==0&&D8==0) return 1;
 }
 
+void back_first_track()
+{
+    while(true)
+	{
+		if((D3==1)&&(D4 == 0)&&(D5 == 0)&&(D6 == 1))    
+		{
+			forward(40);
+		}
+		else if((D4 == 0)&&(D5 != 0))   
+		{
+			rightward(40);
+		}
+		else if((D4 != 0)&&(D5 == 0))   
+		{
+			leftward(40);
+		}
+		else if((D3 == 0)&&(D4 == 0)&&(D2 == 0)&&(D1==1))   
+		{
+			rightward(40);
+		}
+		else if((D5 == 0)&&(D6 == 0)&&(D7 == 0)&&(D8==1))   
+		{
+			leftward(40);
+		}
+		else if(track_detect())
+		{
+			corner_track_count--;
+			if(corner_track_count==0) {
+				forward(80);
+				while(D8==1&&D1==1)
+				{
+					if((D3==1)&&(D4 == 0)&&(D5 == 0)&&(D6 == 1))    
+					{
+					forward(40);
+					}
+					else if((D4 == 0)&&(D5 != 0))   
+					{
+					rightward(40);
+					}
+					else if((D4 != 0)&&(D5 == 0))   
+					{
+					leftward(40);
+					}
+				}
+				break;
+			}
+		}
+	}
+}
+
 
 //十字路口处抓取，计数抓取到第四个蛋时，掉头返回，不负责移动
 void column_grab()
